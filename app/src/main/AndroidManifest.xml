@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AndroidCameraAndMedia"
         tools:targetApi="31">
         <activity
-            android:name=".basic.video_player.VideoPlayerActivity"
+            android:name=".basic.video_editor.VideoEditorActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidCameraAndMedia">
@@ -28,14 +28,14 @@
             </intent-filter>
         </activity>
 
-<!--        <service-->
-<!--            android:name=".basic.media_player.PlaybackService"-->
-<!--            android:exported="true"-->
-<!--            android:foregroundServiceType="mediaPlayback">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="androidx.media3.session.MediaSessionService" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+        <!--        <service-->
+        <!--            android:name=".basic.media_player.PlaybackService"-->
+        <!--            android:exported="true"-->
+        <!--            android:foregroundServiceType="mediaPlayback">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="androidx.media3.session.MediaSessionService" />-->
+        <!--            </intent-filter>-->
+        <!--        </service>-->
 
 
     </application>

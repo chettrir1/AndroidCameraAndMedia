@@ -13,7 +13,6 @@ sealed class SurfaceType {
     object SurfaceView : SurfaceType()
 }
 
-
 @Composable
 fun PlayerSurface(
     player: Player,
