@@ -10,6 +10,7 @@ activityCompose = "1.9.3"
 composeBom = "2024.09.00"
 media3 = "1.5.1"
 lifecycle = "2.8.7"
+koin = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,10 @@ androidx-media3-effect = { module = "androidx.media3:media3-effect", version.ref
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 
+#koin
+android-koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+androidx-viewmodel = { module = "io.insert-koin:koin-androidx-viewmodel", version.ref = "koin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -54,4 +59,14 @@ media3 = [
     "androidx-media3-session",
     "androidx-media3-transformer",
     "androidx-media3-effect"
+]
+
+lifecycle = [
+    "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-compose"
+]
+
+koin = [
+    "android-koin",
+    "androidx-compose"
 ]
