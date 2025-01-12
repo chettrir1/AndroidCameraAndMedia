@@ -1,6 +1,7 @@
 package com.raju.androidcameraandmedia.player.data
 
 import android.content.Context
+import android.net.Uri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
@@ -10,7 +11,7 @@ class VideoPlayerRepositoryImpl(
 ) : VideoPlayerRepository {
     private var exoPlayer: ExoPlayer? = null
 
-    override fun preparePlayer(uri: String): ExoPlayer {
+    override fun preparePlayer(uri: Uri): ExoPlayer {
         exoPlayer = ExoPlayer.Builder(context).build().apply {
             setMediaItem(MediaItem.fromUri(uri))
             prepare()

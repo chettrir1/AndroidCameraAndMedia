@@ -1,4 +1,4 @@
-package com.raju.androidcameraandmedia.basic.video_editor.component
+package com.raju.androidcameraandmedia.player.presentation.component
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -11,15 +11,15 @@ import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun FilePicker(
-    onFilePicked: (Uri?) -> Unit,
-    modifier: Modifier = Modifier
+    onFilePicked: (Uri) -> Unit
 ) {
-    val context = LocalContext.current
 
     val filePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
-            onFilePicked(uri)
+            if (uri != null) {
+                onFilePicked(uri)
+            }
         }
     )
 

@@ -32,8 +32,8 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.raju.androidcameraandmedia.R
 import com.raju.androidcameraandmedia.basic.data.videos
-import com.raju.androidcameraandmedia.basic.video_player.component.PlayerSurface
-import com.raju.androidcameraandmedia.basic.video_player.component.SurfaceType
+import com.raju.androidcameraandmedia.player.presentation.component.PlayerSurface
+import com.raju.androidcameraandmedia.player.presentation.component.SurfaceType
 import com.raju.androidcameraandmedia.ui.theme.AndroidCameraAndMediaTheme
 
 class VideoPlayerActivity : ComponentActivity() {

@@ -12,8 +12,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import com.raju.androidcameraandmedia.basic.video_player.component.PlayerSurface
-import com.raju.androidcameraandmedia.basic.video_player.component.SurfaceType
+import com.raju.androidcameraandmedia.player.presentation.component.PlayerSurface
+import com.raju.androidcameraandmedia.player.presentation.component.SurfaceType
 
 @Composable
 fun VideoPlayer(

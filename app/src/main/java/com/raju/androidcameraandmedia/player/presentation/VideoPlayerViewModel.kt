@@ -47,6 +47,12 @@ class VideoPlayerViewModel(
                     )
 
                 }
+
+                VideoPlayerAction.FullScreen -> {
+                    _state.value = _state.value.copy(
+                        isFullScreen = !_state.value.isFullScreen
+                    )
+                }
             }
         }
     }
