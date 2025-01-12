@@ -4,8 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raju.androidcameraandmedia.player.domain.PreparePlayerUseCase
 import com.raju.androidcameraandmedia.player.domain.ReleasePlayerUseCase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 class VideoPlayerViewModel(
@@ -15,6 +18,24 @@ class VideoPlayerViewModel(
 
     private val _state = MutableStateFlow(VideoPlayerState())
     val state = _state.asStateFlow()
+    private var playbackJob: Job? = null
+
+    private fun startTimeUpdate() {
+        playbackJob = viewModelScope.launch {
+            while (isActive) {
+                delay(1000)
+                _state.value.player?.let { player ->
+                    val currentPosition = player.currentPosition
+                    val duration = player.duration
+
+                    _state.value = _state.value.copy(
+                        elapsedTime = currentPosition,
+                        remainingTime = duration - currentPosition
+                    )
+                }
+            }
+        }
+    }
 
     fun onAction(action: VideoPlayerAction) {
         viewModelScope.launch {
@@ -32,6 +53,7 @@ class VideoPlayerViewModel(
                 VideoPlayerAction.Play -> {
                     _state.value.player?.play()
                     _state.value = _state.value.copy(isPlaying = true)
+                    startTimeUpdate()
                 }
 
                 VideoPlayerAction.Pause -> {
@@ -59,6 +81,7 @@ class VideoPlayerViewModel(
 
     override fun onCleared() {
         super.onCleared()
+        playbackJob?.cancel()
         onAction(VideoPlayerAction.Release)
     }
 }
