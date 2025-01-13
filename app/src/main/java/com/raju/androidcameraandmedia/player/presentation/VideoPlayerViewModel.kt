@@ -19,6 +19,7 @@ class VideoPlayerViewModel(
     private val _state = MutableStateFlow(VideoPlayerState())
     val state = _state.asStateFlow()
     private var playbackJob: Job? = null
+    private var playerViewJob: Job? = null
 
     private fun startTimeUpdate() {
         playbackJob = viewModelScope.launch {
@@ -80,9 +81,29 @@ class VideoPlayerViewModel(
                     _state.value = _state.value.copy(
                         isPlayerViewClicked = !_state.value.isPlayerViewClicked
                     )
+                    if (_state.value.isPlayerViewClicked) {
+                        startPlayerViewJob()
+                    } else {
+                        cancelPlayerViewJob()
+                    }
                 }
             }
         }
+    }
+
+    private fun startPlayerViewJob() {
+        playerViewJob?.cancel()
+        playerViewJob = viewModelScope.launch {
+            delay(15000)
+            _state.value = _state.value.copy(
+                isPlayerViewClicked = false
+            )
+        }
+    }
+
+    private fun cancelPlayerViewJob() {
+        playerViewJob?.cancel()
+        playerViewJob = null
     }
 
     override fun onCleared() {
