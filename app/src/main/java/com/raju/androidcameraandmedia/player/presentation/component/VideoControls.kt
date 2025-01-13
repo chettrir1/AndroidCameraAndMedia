@@ -1,6 +1,5 @@
 package com.raju.androidcameraandmedia.player.presentation.component
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -37,11 +36,9 @@ fun VideoControls(
     val elapsedTimeFormatted = elapsedTime.formatTime()
     val remainingTimeFormatted = remainingTime.formatTime()
 
-    println("elapsedTime $elapsedTimeFormatted")
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .background(color = Color.Gray.copy(alpha = 0.5f))
             .padding(start = 16.dp)
     ) {
 
@@ -82,6 +79,7 @@ fun VideoControls(
                         R.drawable.ic_fullscreen
                     ),
                     contentDescription = "Full Screen",
+                    tint = Color.White,
                     modifier = Modifier
                         .size(24.dp)
                 )

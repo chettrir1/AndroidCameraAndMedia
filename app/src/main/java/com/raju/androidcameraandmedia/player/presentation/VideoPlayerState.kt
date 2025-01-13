@@ -9,5 +9,6 @@ data class VideoPlayerState(
     val player: ExoPlayer? = null,
     val isFullScreen: Boolean = false,
     val elapsedTime: Long? = 0L,
-    val remainingTime: Long? = 0L
+    val remainingTime: Long? = 0L,
+    val isPlayerViewClicked: Boolean = false
 )

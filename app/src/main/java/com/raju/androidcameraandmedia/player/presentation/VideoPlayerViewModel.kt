@@ -75,6 +75,12 @@ class VideoPlayerViewModel(
                         isFullScreen = !_state.value.isFullScreen
                     )
                 }
+
+                VideoPlayerAction.IsPlayerViewClicked -> {
+                    _state.value = _state.value.copy(
+                        isPlayerViewClicked = !_state.value.isPlayerViewClicked
+                    )
+                }
             }
         }
     }

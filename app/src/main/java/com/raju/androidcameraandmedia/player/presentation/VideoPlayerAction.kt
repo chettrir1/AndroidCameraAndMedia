@@ -8,4 +8,5 @@ sealed interface VideoPlayerAction {
     object Pause : VideoPlayerAction
     object Release : VideoPlayerAction
     object FullScreen : VideoPlayerAction
+    object IsPlayerViewClicked : VideoPlayerAction
 }
