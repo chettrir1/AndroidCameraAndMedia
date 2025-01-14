@@ -30,8 +30,7 @@ class VideoPlayerViewModel(
                     val duration = player.duration
 
                     _state.value = _state.value.copy(
-                        elapsedTime = currentPosition,
-                        remainingTime = duration - currentPosition
+                        elapsedTime = currentPosition, remainingTime = duration - currentPosition
                     )
                 }
             }
@@ -44,9 +43,7 @@ class VideoPlayerViewModel(
                 is VideoPlayerAction.LoadVideo -> {
                     val player = preparePlayerUseCase(action.url)
                     _state.value = _state.value.copy(
-                        player = player,
-                        videoUrl = action.url,
-                        isPlaying = true
+                        player = player, videoUrl = action.url, isPlaying = true
                     )
                     player.play()
                 }
@@ -65,10 +62,8 @@ class VideoPlayerViewModel(
                 VideoPlayerAction.Release -> {
                     releasePlayerUseCase()
                     _state.value = _state.value.copy(
-                        player = null,
-                        isPlaying = false
+                        player = null, isPlaying = false
                     )
-
                 }
 
                 VideoPlayerAction.FullScreen -> {
@@ -85,6 +80,14 @@ class VideoPlayerViewModel(
                         startPlayerViewJob()
                     } else {
                         cancelPlayerViewJob()
+                    }
+                }
+
+                is VideoPlayerAction.OrientationChange -> {
+                    if (action.isLandscape && !_state.value.isFullScreen) {
+                        _state.value = _state.value.copy(isFullScreen = true)
+                    } else {
+                        _state.value = _state.value.copy(isFullScreen = false)
                     }
                 }
             }

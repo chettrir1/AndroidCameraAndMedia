@@ -9,4 +9,5 @@ sealed interface VideoPlayerAction {
     object Release : VideoPlayerAction
     object FullScreen : VideoPlayerAction
     object IsPlayerViewClicked : VideoPlayerAction
+    data class OrientationChange(val isLandscape: Boolean) : VideoPlayerAction
 }

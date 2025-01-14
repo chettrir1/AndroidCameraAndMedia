@@ -1,5 +1,7 @@
 package com.raju.androidcameraandmedia.player.presentation
 
+import android.app.Activity
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
@@ -17,12 +19,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.raju.androidcameraandmedia.player.presentation.component.PlayerSurface
 import com.raju.androidcameraandmedia.player.presentation.component.SurfaceType
 import com.raju.androidcameraandmedia.player.presentation.component.VideoControls
@@ -30,20 +37,27 @@ import com.raju.androidcameraandmedia.player.presentation.component.calculateAsp
 
 @Composable
 fun VideoPlayerScreen(
-    onAction: (VideoPlayerAction) -> Unit,
-    state: VideoPlayerState,
-    modifier: Modifier = Modifier
+    onAction: (VideoPlayerAction) -> Unit, state: VideoPlayerState, modifier: Modifier = Modifier
 ) {
+
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    LaunchedEffect(isLandscape) {
+        if (!state.isFullScreen) {
+            onAction(VideoPlayerAction.OrientationChange(isLandscape))
+        }
+    }
 
     val aspectRatio = calculateAspectRation(1920, 1080)
 
-    val aspectRationModifier = modifier
-        .fillMaxSize()
-        .aspectRatio(aspectRatio)
+    val aspectRationModifier =
+        if (isLandscape || state.isFullScreen) modifier else modifier
+            .fillMaxSize()
+            .aspectRatio(aspectRatio)
 
     Box(
-        modifier = aspectRationModifier
-            .background(color = Color.Black),
+        modifier = aspectRationModifier.background(color = Color.Black),
     ) {
 
         PlayerSurface(
@@ -53,27 +67,20 @@ fun VideoPlayerScreen(
                 .fillMaxSize()
                 .clickable(
                     indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) {
+                    interactionSource = remember { MutableInteractionSource() }) {
                     onAction(VideoPlayerAction.IsPlayerViewClicked)
-                }
-        )
+                })
 
         AnimatedVisibility(
-            visible = state.isPlayerViewClicked,
-            enter = fadeIn(
+            visible = state.isPlayerViewClicked, enter = fadeIn(
                 animationSpec = tween(
-                    300,
-                    easing = EaseIn
+                    300, easing = EaseIn
                 )
-            ),
-            exit = fadeOut(
+            ), exit = fadeOut(
                 animationSpec = tween(
-                    300,
-                    easing = EaseOut
+                    300, easing = EaseOut
                 )
-            ),
-            modifier = Modifier.align(Alignment.Center)
+            ), modifier = Modifier.align(Alignment.Center)
         ) {
             Box(
                 modifier = Modifier
@@ -83,32 +90,24 @@ fun VideoPlayerScreen(
         }
 
         AnimatedVisibility(
-            visible = state.isPlayerViewClicked,
-            enter = fadeIn(
+            visible = state.isPlayerViewClicked, enter = fadeIn(
                 animationSpec = tween(
-                    300,
-                    easing = EaseIn
+                    300, easing = EaseIn
                 )
-            ),
-            exit = fadeOut(
+            ), exit = fadeOut(
                 animationSpec = tween(
-                    300,
-                    easing = EaseOut
+                    300, easing = EaseOut
                 )
-            ),
-            modifier = Modifier.align(Alignment.Center)
+            ), modifier = Modifier.align(Alignment.Center)
         ) {
             Row {
                 IconButton(
-                    onClick = {
-                    }
-                ) {
+                    onClick = {}) {
                     Icon(
                         painter = painterResource(android.R.drawable.ic_media_previous),
                         contentDescription = "Play",
                         tint = Color.White,
-                        modifier = Modifier
-                            .size(32.dp)
+                        modifier = Modifier.size(32.dp)
                     )
                 }
 
@@ -119,54 +118,43 @@ fun VideoPlayerScreen(
                         } else {
                             onAction(VideoPlayerAction.Play)
                         }
-                    }
-                ) {
+                    }) {
                     Icon(
-                        painter = if (state.isPlaying)
-                            painterResource(android.R.drawable.ic_media_pause)
+                        painter = if (state.isPlaying) painterResource(android.R.drawable.ic_media_pause)
                         else painterResource(android.R.drawable.ic_media_play),
                         tint = Color.White,
                         contentDescription = "Play",
-                        modifier = Modifier
-                            .size(56.dp)
+                        modifier = Modifier.size(56.dp)
                     )
                 }
 
                 IconButton(
                     onClick = {
 
-                    }
-                ) {
+                    }) {
                     Icon(
                         painter = painterResource(android.R.drawable.ic_media_next),
                         contentDescription = "Play",
                         tint = Color.White,
-                        modifier = Modifier
-                            .size(32.dp)
+                        modifier = Modifier.size(32.dp)
                     )
                 }
             }
         }
 
         AnimatedVisibility(
-            visible = state.isPlayerViewClicked,
-            enter = fadeIn(
+            visible = state.isPlayerViewClicked, enter = fadeIn(
                 animationSpec = tween(
-                    300,
-                    easing = EaseIn
+                    300, easing = EaseIn
                 )
-            ),
-            exit = fadeOut(
+            ), exit = fadeOut(
                 animationSpec = tween(
-                    300,
-                    easing = EaseOut
+                    300, easing = EaseOut
                 )
-            ),
-            modifier = Modifier.align(Alignment.BottomCenter)
+            ), modifier = Modifier.align(Alignment.BottomCenter)
         ) {
             VideoControls(
-                state = state,
-                onAction = { onAction }
+                state = state, onAction = onAction
             )
         }
     }
